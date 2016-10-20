@@ -365,7 +365,7 @@ _-Ever heard of Python 3?_
 
 ## Create virtualDOM you want to place:
 ```
-var newDOM = e$('ul', {class: 'exampleClass', title:'exampleTitle'}, 
+var newDOM = e$(}, 
    e$('li', {}, 
       'item 1'
    ),
@@ -386,17 +386,19 @@ var elem = e$($elem);
 ```
 ### `elem.eDom` would be equal:
 ```
-e$('ul', {class: 'exampleClass', title:'exampleTitle'}, 
-   e$('li', {}, 
-      'item 1'
-   ),
-   e$('li', {}, 
-      'item 2'
-   )
+e$('div', {id: 'root'}, 
+   e$('ul'}, 
+     e$('li', {}, 
+        'item 1'
+     ),
+     e$('li', {}, 
+        'item 2'
+     )
+  )
 );
 ```
 
-## Update `HTMLElem` with your new virtualDOM:
+## Add or Update `HTMLElem` childrens with your new virtualDOM:
 ```
 elem.eOut(newDOM);
 ```
