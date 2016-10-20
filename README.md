@@ -1,4 +1,4 @@
-# eDom v 0.8
+# eDom v 0.9.0
 
 Wanna get VirtualDOM speed, but you can't or don't want to use a lot of new technologies? 
 
