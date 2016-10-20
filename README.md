@@ -9,12 +9,12 @@ var newDOM = e$('DIV', {class: 'someClass', title:'someTitle'},
 );
 ```
 
-## Make `HTMLElem` it's eDom version:
+## Make `HTMLElem` it's own eDom object:
 ```
 var elem = e$('#item');
 ```
 
-## Update 'HTMLElem' with new eDom:
+## Update `HTMLElem` with new eDom:
 ```
 elem.eOut(newDOM);
 ```
