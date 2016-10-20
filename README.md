@@ -8,7 +8,7 @@ Here is the answer: `Don't use it!` Make it right, if it can be done right!
   <summary>Why Virtual DOM so fast?</summary>
 Because it don't change `HTMLElements` in real DOM when it not nessesary. 
 
-![how eDom works?](https://media.giphy.com/media/l3vQXuZ2CaPZEX80o/giphy.gif)
+![how eDom works?](https://psv4.vk.me/c810321/u192500/docs/023eddd0ac62/eDom-demo.gif?extra=kn2Z7gylQ6QOOf26L29PCJB6MVGgKQsV0DWoAPIepI0r3hqD-_kX6PqQOYxeALSmRSKDJA3ZbQeOWXFvZ9AbDJfeYS4D-vrDv3_xlpCJ4nwKCDbpoH0)
 </details>
 
 <details> 
@@ -414,6 +414,8 @@ elem.eOut(newDOM);
 ```
 
 ![how it works](https://cdn-images-1.medium.com/max/800/1*e1s_Zc_fVxL3i0un2ZNEtg.gif)
+
+inspired by deathmood
 
 P.S.: I'm realy reccomend you to use React(or Angular2 or etc.) with ECMA6++ or TS and other staff, use this lib only when don't have any other choice.
 
