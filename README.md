@@ -2,14 +2,12 @@
 
 Wanna use get VirtualDOM update speed without using a lot of new technologies? 
 
-Here is the answer: Don't! Make it right!
-
-But if u still want it i can anderstand why:
+Here is the answer: Don't! Make it right, if it can be done right!
 
 <details> 
-  <summary>Reason Why</summary>   
+  <summary>But if u still want it i can anderstand why:</summary>   
   
-[Reason Why](https://hackernoon.com/how-it-feels-to-learn-javascript-in-2016-d3a717dd577f?ref=mybridge.co#.8izemvqt6)
+[source](https://hackernoon.com/how-it-feels-to-learn-javascript-in-2016-d3a717dd577f?ref=mybridge.co#.8izemvqt6)
 
 Hey, I got this new web project, but to be honest I haven’t coded much web in a few years and I’ve heard the landscape changed a bit. You are the most up-to date web dev around here right?
 
@@ -379,7 +377,7 @@ var newDOM = e$(},
 ```
 var elem = e$('#root');
 ```
-## Or just use JQuery element
+### Or just use JQuery element
 ```
 var $elem = $('#root').find('li').eq(1);
 var elem = e$($elem);
