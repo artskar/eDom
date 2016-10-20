@@ -1,5 +1,7 @@
 # eDom v 0.8.0
 
+[Почему это появилось](https://habrahabr.ru/post/312022/)
+
 ## Create virtualDOM you want to place:
 ```
 var newDOM = e$('DIV', {class: 'someClass', title:'someTitle'}, 
