@@ -1,10 +1,8 @@
 # eDom v 0.8.0
 
-[Почему это появилось](https://habrahabr.ru/post/312022/) | [Reason Why](https://hackernoon.com/how-it-feels-to-learn-javascript-in-2016-d3a717dd577f?ref=mybridge.co#.8izemvqt6)
-
 <details> 
-  <summary>Spoiler </summary>
-   
+  <summary>Spoiler </summary>   
+[Почему это появилось](https://habrahabr.ru/post/312022/) | [Reason Why](https://hackernoon.com/how-it-feels-to-learn-javascript-in-2016-d3a717dd577f?ref=mybridge.co#.8izemvqt6)
 </details>
 
 ## Create virtualDOM you want to place:
