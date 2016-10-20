@@ -1,4 +1,4 @@
-# eDom
+# eDom v 0.8.0
 
 ## Create virtualDOM you want to place:
 ```
