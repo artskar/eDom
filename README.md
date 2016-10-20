@@ -384,7 +384,7 @@ var elem = e$('#root');
 ```
 ### Or just use JQuery element
 ```
-var $elem = $('#root').find('li').eq(1);
+var $elem = $('#root');
 var elem = e$($elem);
 ```
 ### `elem.eDom` would be equal:
