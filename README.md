@@ -1,6 +1,6 @@
 # eDom
 
-## Create virtualDom:
+## Create virtualDOM you want to place:
 ```
 var newDOM = e$('DIV', {class: 'someClass', title:'someTitle'}, 
    e$('DIV', {class: 'someClass2', title:'someTitle2'}, 
@@ -14,7 +14,7 @@ var newDOM = e$('DIV', {class: 'someClass', title:'someTitle'},
 var elem = e$('#item');
 ```
 
-## Update `HTMLElem` with new eDom:
+## Update `HTMLElem` with your new virtualDOM:
 ```
 elem.eOut(newDOM);
 ```
