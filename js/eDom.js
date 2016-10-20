@@ -1,12 +1,11 @@
 /* globals Symbol:true */
+
 'use strict';
 
-var e$;
-
-NodeList.prototype.isNodeList = HTMLCollection.prototype.isNodeList = function(){return true;};
+var e$, eDom;
 
 /**
- * 
+ * Easy Dom v0.9
  * @param type HTMLelem or tagName
  * @param {object} props element attributes
  * @arg children
@@ -17,43 +16,123 @@ e$ = function (type, props) {
     var typeOf = typeof type;
     if (typeOf === 'string') {
         var firstLetter = type.charAt(0);
+
         if (firstLetter === '#') {
-            return e$.makeElement(document.getElementById(type.substr(1)));
+            return e$.eDomCheck(document.getElementById(type.substr(1)));
         } else if (firstLetter === '.') {
-            return e$.makeElement(document.getElementsByClassName(type.split('.').join(' '))[0]);
+            return e$.eDomCheck(document.getElementsByClassName(type.split('.').join(' '))[0]);
         } else {
             for (var i = 2, len = arguments.length, children = [len > 2 ? len - 2 : 0]; i < len; i++) {
                 children[i - 2] = arguments[i];
             }
+
             if (children[0] === 0) {
                 children = [];
             }
-            var node = { type: type, props: props || {}, children: children };
-            node.create = e$.create;
-            return node;
+
+            return new eDom(type, props, children);
         }
     } else if (typeOf === 'object') {
         if (type.tagName) {
-            return e$.makeElement(type);
+            return e$.eDomCheck(type);
         } else if (type.jquery || NodeList.prototype.isNodeList(type)) {
-            return e$.makeElement(type[0]);
+            return e$.eDomCheck(type[0]);
         }
     }
 };
 
-e$.makeElement = function (elem) {
+e$.eDomCreate = function (elem) {
+    var props = e$.getAllProps(elem),
+        eDom = {},
+        childrenLen = elem.children.length,
+        children = [];
+
+    if (childrenLen > 0) {
+        for (var i = 0; i < childrenLen; i++) {
+            var child = elem.children[i];
+
+            children[children.length] = e$.eDomCreate(child)
+        }
+    } else {
+        if (elem.childNodes.length) {
+            children[children.length] = elem.childNodes[0].textContent;
+        }
+    }
+
+    eDom['type'] = elem.tagName;
+    eDom['props'] = props;
+    eDom['children'] = children;
+
+    return eDom;
+};
+
+e$.create = function (node) {
+    var newNode;
+    if (typeof node === 'undefined') {
+        newNode = this;
+    } else {
+        newNode = node;
+    }
+
+    var nodeType = typeof newNode;
+
+    if (nodeType === 'string' || nodeType === 'number') {
+        return document.createTextNode(newNode);
+    }
+
+    var elem = document.createElement(newNode.type);
+    e$.setAllProps(elem, newNode.props);
+    e$.addEventListeners(elem, newNode.props);
+    elem.eDom = newNode;
+    newNode.children.map(e$.create).forEach(elem.appendChild.bind(elem));
+    return elem;
+};
+
+NodeList.prototype.isNodeList = HTMLCollection.prototype.isNodeList = function(){return true;};
+
+Element.prototype.eOut = function (node) {
+    var updateParent = false,
+        newNode = node,
+        index = e$.getIndex(this);
+
+    if (typeof arguments[0] === 'boolean') {
+        updateParent = arguments[0];
+        newNode = arguments[1];
+    }
+
+    e$.update(updateParent, this, newNode, index);
+};
+
+Element.prototype.eIn = function (updateAtts) {
+    if (updateAtts) {
+        this.eDom.props = e$.getAllProps(this);
+    } else {
+        this.eDom = e$.eDomCreate(this);
+    }
+
+    return this.eDom;
+};
+
+eDom = function (type, props, children) {
+    this.type = type;
+    this.props = props;
+    this.children = children;
+};
+
+eDom.prototype = {
+    create: e$.create
+};
+
+e$.eDomCheck = function (elem) {
     if (typeof elem.eDom !== 'object') {
         elem.eDom = e$.eDomCreate(elem);
-    }
-    if (typeof elem.eOut !== 'function') { // TODO: Выпилить условие после обновления всех методов на диффренте
-        e$.setMethods(elem);
     }
     return elem;
 };
 
 e$.getAllProps = function (elem) {
     for (var i = 0, atts = elem.attributes, len = atts.length, arr = []; i < len; i++){
-        arr.push(atts[i].nodeName);
+        arr[arr.length] = atts[i].nodeName;
     }
     return arr;
 };
@@ -136,9 +215,11 @@ e$.updateAllProps = function (elem, newProps) {
     } else {
         oldProps = arguments[2];
     }
+
     var props = {};
     e$.extend(props, oldProps);
     e$.extend(props, newProps);
+
     Object.keys(props).forEach(function (name) {
         if (name === 'value') {
             elem.value = newProps.value || '';
@@ -151,6 +232,7 @@ e$.updateAllProps = function (elem, newProps) {
 e$.changed = function (node1, node2) {
     var conditon1 = typeof node1 === 'undefined' ? 'undefined' : e$.typeof(node1),
         conditon2 = typeof node2 === 'undefined' ? 'undefined' : e$.typeof(node2);
+
     return (conditon1) !== (conditon2) || typeof node1 === 'number' && node1 !== node2 || typeof node1 === 'string' && node1 !== node2 || node1.type !== node2.type || node1.props && node1.props.forceUpdate;
 };
 
@@ -160,47 +242,6 @@ e$.addEventListeners = function (elem, props) {
             elem.addEventListener(e$.extractEventName(name), props[name]);
         }
     });
-};
-
-e$.eDomCreate = function (elem) {
-    var props = e$.getAllProps(elem),
-        eDom = {},
-        childrenLen = elem.children.length,
-        children = [];
-    if (childrenLen > 0) {
-        for (var i = 0; i < childrenLen; i++) {
-            var child = elem.children[i];
-            children.push(e$.eDomCreate(child));
-        }
-    } else {
-        if (elem.childNodes.length) {
-            children.push(elem.childNodes[0].textContent);
-        }
-    }
-    eDom['type'] = elem.tagName;
-    eDom['props'] = props;
-    eDom['children'] = children;
-    return eDom;
-};
-
-e$.create = function (node) {
-    var newNode;
-    if (typeof node === 'undefined') {
-        newNode = this;
-    } else {
-        newNode = node;
-    }
-    var nodeType = typeof newNode;
-    if (nodeType === 'string' || nodeType === 'number') {
-        return document.createTextNode(newNode);
-    }
-    var elem = document.createElement(newNode.type);
-    e$.setAllProps(elem, newNode.props);
-    e$.addEventListeners(elem, newNode.props);
-    elem.eDom = newNode;
-    e$.setMethods(elem);
-    newNode.children.map(e$.create).forEach(elem.appendChild.bind(elem));
-    return elem;
 };
 
 /**
@@ -217,20 +258,23 @@ e$.update = function (item, node) {
         parentArg = 0, newNodeArg = 1,
         argLen = arguments.length,
         lastArg = arguments[argLen - 1];
+
     if (typeof arguments[0] === 'boolean') {
         updateParent = arguments[0];
         parentArg = 1;
         newNodeArg = 2;
     }
+
     parent = arguments[parentArg];
     newNode = arguments[newNodeArg];
+
     if (typeof lastArg === 'number') {
         index = lastArg;
     }
-    if (!parent.eDom) { // TODO: рудимент, который после перевода сайта на новое обращение надо выпилить или в качестве защиты от дурака на лету прикручивать виртуальное представление с помощью e$.eDomCreate()
-        parent.eDom = e$(parent.tagName, {});
-    }
+
+    e$.eDomCheck(parent);
     oldNode = parent.eDom.children[index];
+
     if (!oldNode) {
         parent.appendChild(e$.create(newNode));
     } else if (!newNode) {
@@ -239,16 +283,20 @@ e$.update = function (item, node) {
         parent.replaceChild(e$.create(newNode), parent.childNodes[index]);
     } else if (newNode.type) {
         e$.updateAllProps(parent.childNodes[index], newNode.props, oldNode.props);
+
         var newLength = newNode.children.length,
             oldLength = oldNode.children.length;
+
         for (var i = 0; i < newLength || i < oldLength; i++) {
             e$.update(false, parent.children[index], newNode.children[i], i);
         }
     }
+
     if (parent.children[index]) {
         parent.eDom.children[index] = newNode;
         parent.children[index].eDom = newNode;
     }
+
     if (updateParent) {
         e$.updateParents(parent.childNodes[index]);
     }
@@ -279,6 +327,7 @@ e$.updateParents = function (elem) {
 e$.hasClass = function (item, className) {
     if (item.props.hasOwnProperty('class')) {
         var classList = item.props.class.split(' ');
+
         return e$.inArray(className, classList);
     } else {
         return false;
@@ -287,6 +336,7 @@ e$.hasClass = function (item, className) {
 
 e$.addClass = function (item, className) {
     var classPosition = e$.hasClass(item, className);
+
     if (classPosition >= 0) {
         return false;
     } else {
@@ -296,6 +346,7 @@ e$.addClass = function (item, className) {
 
 e$.removeClass = function (item, className) {
     var classPosition = e$.hasClass(item, className);
+
     if (classPosition >= 0) {
         var classList = item.props.class.split(' ');
         classList.splice(classPosition, 1);
@@ -312,32 +363,7 @@ e$.removeClass = function (item, className) {
 e$.insert = function (parent, index, newNode) {
     var eDom = parent.eDom;
     parent.insertBefore(e$.create(newNode), parent.children[index]);
+
     eDom.children.splice(index, 0, newNode);
     e$.updateParents(parent);
-};
-
-e$.setMethods = function (elem) {
-    elem.eOut = e$.eOut;
-    elem.eIn = e$.eIn;
-};
-
-e$.eIn = function (updateAtts) {
-    if (updateAtts) {
-        this.eDom.props = e$.getAllProps(this);
-    } else {
-        this.eDom = e$.eDomCreate(this);
-    }
-    
-    return this.eDom;
-};
-
-e$.eOut = function (node) {
-    var updateParent = false,
-        newNode = node,
-        index = e$.getIndex(this);
-    if (typeof arguments[0] === 'boolean') {
-        updateParent = arguments[0];
-        newNode = arguments[1];
-    }
-    e$.update(updateParent, this, newNode, index);
 };
