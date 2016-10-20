@@ -1,7 +1,9 @@
 # eDom v 0.8.0
 
-Wanna use get VirtualDOM update speed without using a lot of new technologies? Here is the answer:
-Don't! 
+Wanna use get VirtualDOM update speed without using a lot of new technologies? 
+
+Here is the answer: Don't! Make it right!
+
 But if u still want it i can anderstand why:
 
 <details> 
