@@ -7,8 +7,6 @@ Here is the answer: Don't! Make it right, if it can be done right!
 <details> 
   <summary>But if u still want it i can anderstand why:</summary>   
   
-[source](https://hackernoon.com/how-it-feels-to-learn-javascript-in-2016-d3a717dd577f?ref=mybridge.co#.8izemvqt6)
-
 Hey, I got this new web project, but to be honest I haven’t coded much web in a few years and I’ve heard the landscape changed a bit. You are the most up-to date web dev around here right?
 
 _-The actual term is Front End engineer, but yeah, I’m the right guy. I do web in 2016. Visualisations, music players, flying drones that play football, you name it. I just came back from JsConf and ReactConf, so I know the latest technologies to create web apps._
@@ -359,7 +357,7 @@ _-Ever heard of Python 3?_
 
 </details>
 
-[Почему это появилось на русском](https://habrahabr.ru/post/312022/)
+[source](https://hackernoon.com/how-it-feels-to-learn-javascript-in-2016-d3a717dd577f?ref=mybridge.co#.8izemvqt6) | [переведённый источник](https://habrahabr.ru/post/312022/)
 
 ## Create virtualDOM you want to place:
 ```
