@@ -1,5 +1,9 @@
 # eDom v 0.8.0
 
+Wanna use get VirtualDOM update speed without using a lot of new technologies? Here is the answer:
+Don't! 
+But if u still want it i can anderstand why:
+
 <details> 
   <summary>Reason Why</summary>   
   
@@ -381,3 +385,4 @@ var elem = e$($elem);
 elem.eOut(newDOM);
 ```
 
+![how it works](https://cdn-images-1.medium.com/max/800/1*e1s_Zc_fVxL3i0un2ZNEtg.gif)
