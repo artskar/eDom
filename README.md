@@ -1,8 +1,15 @@
 # eDom v 0.9.0
 
-Wanna get VirtualDOM speed, but you can't or don't want to use a lot of new technologies? 
+Wanna get VirtualDOM speed, but you can't or don't want to use a lot of new technologies and ideology(React, ECMA6, Redux, etc.)? 
 
-Here is the answer: Don't! Make it right, if it can be done right!
+Here is the answer: `Don't use it!` Make it right, if it can be done right!
+
+<details>
+  <summary>Why Virtual DOM so fast?</summary>
+Because it don't change `HTMLElements` in real DOM when it not nessesary. 
+
+![how eDom works?](http://www.giphy.com/gifs/l3vQXuZ2CaPZEX80o)
+</details>
 
 <details> 
   <summary>But if u still want it i can anderstand [why](https://hackernoon.com/how-it-feels-to-learn-javascript-in-2016-d3a717dd577f?ref=mybridge.co#.8izemvqt6):</summary>   
@@ -407,3 +414,6 @@ elem.eOut(newDOM);
 ```
 
 ![how it works](https://cdn-images-1.medium.com/max/800/1*e1s_Zc_fVxL3i0un2ZNEtg.gif)
+
+P.S.: I'm realy reccomend you to use React(or Angular2 or etc.) with ECMA6++ or TS and other staff, use this lib only when don't have any other choice.
+
