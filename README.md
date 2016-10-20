@@ -16,6 +16,6 @@ var elem = e$('#item');
 
 ## Update 'HTMLElem' with new eDom:
 ```
-elem.update(newDOM);
+elem.eOut(newDOM);
 ```
 
