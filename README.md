@@ -8,7 +8,7 @@ Here is the answer: `Don't use it!` Make it right, if it can be done right!
   <summary>Why Virtual DOM so fast?</summary>
 Because it don't change `HTMLElements` in real DOM when it not nessesary. 
 
-![how eDom works?](http://www.giphy.com/gifs/l3vQXuZ2CaPZEX80o)
+![how eDom works?](https://media.giphy.com/media/l3vQXuZ2CaPZEX80o/giphy.gif)
 </details>
 
 <details> 
