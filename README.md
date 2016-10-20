@@ -362,8 +362,8 @@ _-Ever heard of Python 3?_
 Here is `5KB library`, use it to fast update various parts of ur site.
 
 <details> 
-  <summary>When it nessesary:</summary>   
-  It is good to use VirtualDOM when you have to change a lot of data on your site. For example: news\Ads\card list. With eDom you could change textes, classes, image src, link href and other properties without removing and adding DOM nodes when it not nessesary(but will if it is).
+  <summary>When it nessesary?</summary>   
+  It is good to use VirtualDOM when you have to change a lot of data on your site. For example: news\Ads\card list or interface changes. With eDom you could change textes, classes, image src, link href and other properties without removing and adding DOM nodes when it not nessesary(but will if it is).
 </details>
 
 ## Create virtualDOM you want to place:
