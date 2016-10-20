@@ -1,6 +1,6 @@
 # eDom v 0.8.0
 
-Wanna get VirtualDOM update speed without using a lot of new technologies? 
+Wanna get VirtualDOM speed, but you can't or don't want to use a lot of new technologies? 
 
 Here is the answer: Don't! Make it right, if it can be done right!
 
@@ -358,6 +358,13 @@ _-Ever heard of Python 3?_
 </details>
 
 [source](https://hackernoon.com/how-it-feels-to-learn-javascript-in-2016-d3a717dd577f?ref=mybridge.co#.8izemvqt6) | [переведённый источник](https://habrahabr.ru/post/312022/)
+
+Here is `5KB library`, use it to fast update various parts of ur site.
+
+<details> 
+  <summary>When it nessesary:</summary>   
+  It is good to use VirtualDOM when you have to change a lot of data on your site. For example: news\Ads\card list. With eDom you could change textes, classes, image src, link href and other properties without removing and adding DOM nodes when it not nessesary(but will if it is).
+</details>
 
 ## Create virtualDOM you want to place:
 ```
