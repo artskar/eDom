@@ -366,9 +366,10 @@ var newDOM = e$('DIV', {class: 'someClass', title:'someTitle'},
 );
 ```
 
-## Make `HTMLElem` it's own eDom object:
+## Take `HTMLElem` and make its own eDom object by using e$() and this element id or just use JQuery element:
 ```
-var elem = e$('#item');
+* var elem = e$('#item');
+* var elem = e$($('.block').find('.item'));
 ```
 
 ## Update `HTMLElem` with your new virtualDOM:
