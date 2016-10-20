@@ -12,7 +12,7 @@ Because it don't change `HTMLElements` in real DOM when it not nessesary.
 </details>
 
 <details> 
-  <summary>But if u still want it i can anderstand [why](https://hackernoon.com/how-it-feels-to-learn-javascript-in-2016-d3a717dd577f?ref=mybridge.co#.8izemvqt6):</summary>   
+  <summary>But if u still want it i can understand [why](https://hackernoon.com/how-it-feels-to-learn-javascript-in-2016-d3a717dd577f?ref=mybridge.co#.8izemvqt6):</summary>   
   
 Hey, I got this new web project, but to be honest I haven’t coded much web in a few years and I’ve heard the landscape changed a bit. You are the most up-to date web dev around here right?
 
