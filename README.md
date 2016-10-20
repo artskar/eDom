@@ -1,11 +1,11 @@
-# eDom v 0.8.0
+# eDom v 0.8
 
 Wanna get VirtualDOM speed, but you can't or don't want to use a lot of new technologies? 
 
 Here is the answer: Don't! Make it right, if it can be done right!
 
 <details> 
-  <summary>But if u still want it i can anderstand why:</summary>   
+  <summary>But if u still want it i can anderstand [why](https://hackernoon.com/how-it-feels-to-learn-javascript-in-2016-d3a717dd577f?ref=mybridge.co#.8izemvqt6):</summary>   
   
 Hey, I got this new web project, but to be honest I haven’t coded much web in a few years and I’ve heard the landscape changed a bit. You are the most up-to date web dev around here right?
 
@@ -357,7 +357,7 @@ _-Ever heard of Python 3?_
 
 </details>
 
-[source](https://hackernoon.com/how-it-feels-to-learn-javascript-in-2016-d3a717dd577f?ref=mybridge.co#.8izemvqt6) | [переведённый источник](https://habrahabr.ru/post/312022/)
+[переведённый источник](https://habrahabr.ru/post/312022/)
 
 Here is `5KB library`, use it to fast update various parts of ur site.
 
@@ -382,7 +382,7 @@ var newDOM = e$(},
 ```
 var elem = e$('#root');
 ```
-### Or just use JQuery element
+### Or just use `JQuery element`:
 ```
 var $elem = $('#root');
 var elem = e$($elem);
