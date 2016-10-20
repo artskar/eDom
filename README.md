@@ -365,21 +365,35 @@ _-Ever heard of Python 3?_
 
 ## Create virtualDOM you want to place:
 ```
-var newDOM = e$('DIV', {class: 'someClass', title:'someTitle'}, 
-   e$('DIV', {class: 'someClass2', title:'someTitle2'}, 
-      'someText'
+var newDOM = e$('ul', {class: 'exampleClass', title:'exampleTitle'}, 
+   e$('li', {}, 
+      'item 1'
+   ),
+   e$('li', {}, 
+      'hello!'
    )
 );
 ```
 
 ## Take `HTMLElem` and make its own eDom object by using e$() and this element id:
 ```
-var elem = e$('#item');
+var elem = e$('#root');
 ```
 ## Or just use JQuery element
 ```
-var $elem = $('.block').find('.item');
+var $elem = $('#root').find('li').eq(1);
 var elem = e$($elem);
+```
+### `elem.eDom` would be equal:
+```
+e$('ul', {class: 'exampleClass', title:'exampleTitle'}, 
+   e$('li', {}, 
+      'item 1'
+   ),
+   e$('li', {}, 
+      'item 2'
+   )
+);
 ```
 
 ## Update `HTMLElem` with your new virtualDOM:
