@@ -375,7 +375,7 @@ Here is `5KB library`, use it to fast update various parts of ur site.
 
 ## Create virtualDOM you want to place:
 ```
-var newDOM = e$(}, 
+var newDOM = e$('ul', {}, 
    e$('li', {}, 
       'item 1'
    ),
@@ -397,7 +397,7 @@ var elem = e$($elem);
 ### `elem.eDom` would be equal:
 ```
 e$('div', {id: 'root'}, 
-   e$('ul'}, 
+   e$('ul', {}, 
      e$('li', {}, 
         'item 1'
      ),
