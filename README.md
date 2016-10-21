@@ -2,8 +2,6 @@
 
 Wanna get VirtualDOM speed, but you can't or don't want to use a lot of new technologies and ideology(React, ECMA6, Redux, etc.)? 
 
-Here is the answer: `Don't use it!` Make it right, if it can be done right!
-
 <details>
   <summary>Why Virtual DOM so fast?</summary>
 Because it don't change `HTMLElements` in real DOM when it not nessesary. 
@@ -417,5 +415,5 @@ elem.eOut(newDOM);
 
 inspired by deathmood
 
-P.S.: I'm realy reccomend you to use React(or Angular2 or etc.) with ECMA6++ or TS and other staff, use this lib only when don't have any other choice.
+P.S.: I'm strongly reccomend you to use React(or Angular2 or etc.) with ECMA6++ or TS and other good staff, use this lib only when don't have any other choice.
 
