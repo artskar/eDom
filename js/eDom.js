@@ -5,7 +5,7 @@
 var e$, eDom;
 
 /**
- * Easy Dom v0.9
+ * Easy Dom v0.9.1
  * @param type HTMLelem or tagName
  * @param {object} props element attributes
  * @arg children
@@ -90,20 +90,19 @@ e$.create = function (node) {
 
 NodeList.prototype.isNodeList = HTMLCollection.prototype.isNodeList = function(){return true;};
 
-Element.prototype.eOut = function (node) {
+Element.prototype.render = function (node, index) {
     var updateParent = false,
-        newNode = node,
-        index = e$.getIndex(this);
+        newNode = node;
 
     if (typeof arguments[0] === 'boolean') {
         updateParent = arguments[0];
         newNode = arguments[1];
     }
 
-    e$.update(updateParent, this, newNode, index);
+    e$.update(updateParent, this, newNode, index || null);
 };
 
-Element.prototype.eIn = function (updateAtts) {
+Element.prototype.parse = function (updateAtts) {
     if (updateAtts) {
         this.eDom.props = e$.getAllProps(this);
     } else {
