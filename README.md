@@ -1,4 +1,4 @@
-# eDom v 0.9.0
+# eDom v 0.9.1
 
 [README по-русски](https://github.com/artskar/eDom/blob/master/README_ru.md)
 
@@ -408,7 +408,7 @@ e$('div', {id: 'root'},
 
 ## Add or Update `HTMLElem` childrens with your new virtualDOM:
 ```
-elem.eOut(newDOM);
+elem.render(newDOM);
 ```
 
 ![how it works](https://cdn-images-1.medium.com/max/800/1*e1s_Zc_fVxL3i0un2ZNEtg.gif)
