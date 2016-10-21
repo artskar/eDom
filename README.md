@@ -1,5 +1,7 @@
 # eDom v 0.9.0
 
+[README по-русски](https://github.com/artskar/eDom/blob/master/README_ru.md)
+
 Wanna get VirtualDOM speed, but you can't or don't want to use a lot of new technologies and ideology(React, ECMA6, Redux, etc.)? 
 
 <details>
@@ -361,8 +363,6 @@ Why?
 _-Ever heard of Python 3?_
 
 </details>
-
-[переведённый источник](https://habrahabr.ru/post/312022/)
 
 Here is `5KB library`, use it to fast update various parts of ur site.
 
