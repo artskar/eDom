@@ -2,17 +2,16 @@
 
 'use strict';
 
-var e$, eDom;
-
 /**
- * Easy Dom v0.9.1
- * @param type HTMLelem or tagName
+ * Easy Dom v0.9.5
+ * {@link eDom}
+ * @param type HTMLElement || tagName || '.' + className || '#' + id
  * @param {object} props element attributes
  * @arg children
- * @type {{node: e$, typeof: Function, setBooleanProp: e$.setBooleanProp, removeBooleanProp: e$.removeBooleanProp, isEventProp: e$.isEventProp, extractEventName: e$.extractEventName, isCustomProp: e$.isCustomProp, setProp: e$.setProp, removeProp: e$.removeProp, setAllProps: e$.setAllProps, updateProp: e$.updateProp, updateAllProps: e$.updateAllProps, addEventListeners: e$.addEventListeners, createElement: e$.create, changed: e$.changed, updateElement: e$.update, init: e$.init}}
+ * @type {{typeof: Function, eDomCreate, eDomCheck, create, setBooleanProp, removeBooleanProp, isEventProp, extractEventName, getAllProps, setProp, removeProp, setAllProps, updateProp, updateAllProps, addEventListeners, create, changed, update, updateParents, extend, insert, inArray, getIndex, hasClass, addClass, removeClass}}
  * @returns {*}
  */
-e$ = function (type, props) {
+var e$ = function (type, props) {
     var typeOf = typeof type;
     if (typeOf === 'string') {
         var firstLetter = type.charAt(0);
@@ -35,12 +34,17 @@ e$ = function (type, props) {
     } else if (typeOf === 'object') {
         if (type.tagName) {
             return e$.eDomCheck(type);
-        } else if (type.jquery || NodeList.prototype.isNodeList(type)) {
+        } else if (type.jquery || type.isNodeList()) {
             return e$.eDomCheck(type[0]);
         }
     }
 };
-
+/**
+ * {@link e$}
+ * {@link eDom}
+ * @param elem
+ * @returns {{}}
+ */
 e$.eDomCreate = function (elem) {
     var props = e$.getAllProps(elem),
         eDom = {},
@@ -59,13 +63,17 @@ e$.eDomCreate = function (elem) {
         }
     }
 
-    eDom['type'] = elem.tagName;
+    eDom['type'] = elem.tagName.toUpperCase();
     eDom['props'] = props;
     eDom['children'] = children;
 
     return eDom;
 };
-
+/**
+ * {@link e$}
+ * @param node
+ * @returns {*}
+ */
 e$.create = function (node) {
     var newNode;
     if (typeof node === 'undefined') {
@@ -87,9 +95,16 @@ e$.create = function (node) {
     newNode.children.map(e$.create).forEach(elem.appendChild.bind(elem));
     return elem;
 };
-
+/**
+ * 
+ * @type {HTMLCollection.isNodeList}
+ */
 NodeList.prototype.isNodeList = HTMLCollection.prototype.isNodeList = function(){return true;};
-
+/**
+ * {@link e$}
+ * @param node {HTMLElement}
+ * @param index {number}
+ */
 Element.prototype.render = function (node, index) {
     var updateParent = false,
         newNode = node;
@@ -101,19 +116,29 @@ Element.prototype.render = function (node, index) {
 
     e$.update(updateParent, this, newNode, index || null);
 };
-
-Element.prototype.parse = function (updateAtts) {
-    if (updateAtts) {
-        this.eDom.props = e$.getAllProps(this);
-    } else {
+/**
+ * {@link e$}
+ * @returns {{}|*}
+ */
+Element.prototype.syncElement = function () {
+    if (arguments[0]) {
         this.eDom = e$.eDomCreate(this);
+    } else {
+        this.eDom.props = e$.getAllProps(this);
     }
+    e$.updateParents(this);
 
     return this.eDom;
 };
-
-eDom = function (type, props, children) {
-    this.type = type;
+/**
+ * {@link e$}
+ * @param type {String} tagName
+ * @param props {Object} object with attributes
+ * @param children {Array} subj
+ * @type Function
+ */
+var eDom = function (type, props, children) {
+    this.type = type.toUpperCase();
     this.props = props;
     this.children = children;
 };
@@ -121,21 +146,33 @@ eDom = function (type, props, children) {
 eDom.prototype = {
     create: e$.create
 };
-
+/**
+ * {@link e$}
+ * @param elem
+ * @returns {*}
+ */
 e$.eDomCheck = function (elem) {
     if (typeof elem.eDom !== 'object') {
         elem.eDom = e$.eDomCreate(elem);
     }
     return elem;
 };
-
+/**
+ * {@link e$}
+ * @param elem
+ * @returns {Array}
+ */
 e$.getAllProps = function (elem) {
     for (var i = 0, atts = elem.attributes, len = atts.length, arr = []; i < len; i++){
         arr[arr.length] = atts[i].nodeName;
     }
     return arr;
 };
-
+/**
+ * {@link e$}
+ * @param target
+ * @param obj
+ */
 e$.extend = function (target, obj) {
     for (var i in obj) {
         if (obj.hasOwnProperty(i)) {
@@ -143,9 +180,17 @@ e$.extend = function (target, obj) {
         }
     }
 };
-
+/**
+ *
+ * @type {Function}
+ */
 e$.typeof = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === 'function' && obj.constructor === Symbol ? 'symbol' : typeof obj; };
-
+/**
+ *
+ * @param elem
+ * @param name
+ * @param value
+ */
 e$.setBooleanProp = function (elem, name, value) {
     if (value) {
         elem.setAttribute(name, value);
@@ -154,51 +199,77 @@ e$.setBooleanProp = function (elem, name, value) {
         elem[name] = false;
     }
 };
-
+/**
+ * {@link e$}
+ * @param elem
+ * @param name
+ */
 e$.removeBooleanProp = function (elem, name) {
     elem.removeAttribute(name);
     elem[name] = false;
 };
-
+/**
+ * {@link e$}
+ * @param name
+ * @returns {boolean}
+ */
 e$.isEventProp = function (name) {
-    // если начинается на el
+    // if start with el
     return (/^on/.test(name));
 };
-
+/**
+ * {@link e$}
+ * @param name
+ * @returns {string}
+ */
 e$.extractEventName = function (name) {
-    return name.slice(2).toLowerCase();
+    return name.slice(2).toUpperCase();
 };
-
-e$.isCustomProp = function () {
-    return false;
-};
-
+/**
+ * {@link e$}
+ * @param elem
+ * @param name
+ * @param value
+ * @returns {boolean}
+ */
 e$.setProp = function (elem, name, value) {
-    if (e$.isCustomProp(name)) {
-        return true;
-    } else if (typeof value === 'boolean') {
+    if (typeof value === 'boolean') {
         e$.setBooleanProp(elem, name, value);
     } else {
         elem.setAttribute(name, value);
     }
 };
-
+/**
+ * {@link e$}
+ * @param elem
+ * @param name
+ * @param value
+ * @returns {boolean}
+ */
 e$.removeProp = function (elem, name, value) {
-    if (e$.isCustomProp(name)) {
-        return true;
-    } else if (typeof value === 'boolean') {
+    if (typeof value === 'boolean') {
         e$.removeBooleanProp(elem, name);
     } else {
         elem.removeAttribute(name);
     }
 };
-
+/**
+ * {@link e$}
+ * @param elem
+ * @param props
+ */
 e$.setAllProps = function (elem, props) {
     Object.keys(props).forEach(function (name) {
         e$.setProp(elem, name, props[name]);
     });
 };
-
+/**
+ * {@link e$}
+ * @param elem
+ * @param name
+ * @param newVal
+ * @param oldVal
+ */
 e$.updateProp = function (elem, name, newVal, oldVal) {
     if (!newVal) {
         e$.removeProp(elem, name, oldVal);
@@ -206,7 +277,11 @@ e$.updateProp = function (elem, name, newVal, oldVal) {
         e$.setProp(elem, name, newVal);
     }
 };
-
+/**
+ * {@link e$}
+ * @param elem
+ * @param newProps
+ */
 e$.updateAllProps = function (elem, newProps) {
     var oldProps;
     if (arguments.length <= 2 || arguments[2] === undefined) {
@@ -227,14 +302,23 @@ e$.updateAllProps = function (elem, newProps) {
         }
     });
 };
-
+/**
+ * check if node1 is changed or removed
+ * @param node1 {{type, props, forceUpdate}}
+ * @param node2 {{type, props, forceUpdate}}
+ * @returns {boolean|*}
+ */
 e$.changed = function (node1, node2) {
-    var conditon1 = typeof node1 === 'undefined' ? 'undefined' : e$.typeof(node1),
-        conditon2 = typeof node2 === 'undefined' ? 'undefined' : e$.typeof(node2);
+    var condition1 = typeof node1 === 'undefined' ? 'undefined' : e$.typeof(node1),
+        condition2 = typeof node2 === 'undefined' ? 'undefined' : e$.typeof(node2);
 
-    return (conditon1) !== (conditon2) || typeof node1 === 'number' && node1 !== node2 || typeof node1 === 'string' && node1 !== node2 || node1.type !== node2.type || node1.props && node1.props.forceUpdate;
+    return (condition1) !== (condition2) || typeof node1 === 'number' && node1 !== node2 || typeof node1 === 'string' && node1 !== node2 || node1.type !== node2.type || node1.props && node1.props.forceUpdate;
 };
-
+/**
+ * {@link e$}
+ * @param elem
+ * @param props
+ */
 e$.addEventListeners = function (elem, props) {
     Object.keys(props).forEach(function (name) {
         if (e$.isEventProp(name)) {
@@ -242,9 +326,8 @@ e$.addEventListeners = function (elem, props) {
         }
     });
 };
-
 /**
- *
+ * {@link e$}
  * @param {boolean || object} item {object} {{tagName, children, eDom, appendChild, replaceChild, removeChild, childNodes}} || {boolean} - update parent condition
  * @param node {{tagName, children, eDom, appendChild, replaceChild, removeChild, childNodes}}
  */
@@ -300,7 +383,11 @@ e$.update = function (item, node) {
         e$.updateParents(parent.childNodes[index]);
     }
 };
-
+/**
+ * {@link e$}
+ * @param elem
+ * @returns {number}
+ */
 e$.getIndex = function (elem) {
     var index = 0;
     while (elem = elem.previousSibling) {
@@ -310,59 +397,14 @@ e$.getIndex = function (elem) {
     }
     return index;
 };
-
-e$.inArray = function (elem, arr, i) {
-    return arr === null ? -1 : arr.indexOf.call(arr, elem, i);
-};
-
+/**
+ * {@link e$}
+ * @param elem
+ */
 e$.updateParents = function (elem) {
-    var parent = elem.parentNode;
+    var parent = elem.parentElement;
     if (parent.eDom) {
         parent.eDom.children[e$.getIndex(elem)] = elem.eDom;
         e$.updateParents(parent);
     }
-};
-
-e$.hasClass = function (item, className) {
-    if (item.props.hasOwnProperty('class')) {
-        var classList = item.props.class.split(' ');
-
-        return e$.inArray(className, classList);
-    } else {
-        return false;
-    }
-};
-
-e$.addClass = function (item, className) {
-    var classPosition = e$.hasClass(item, className);
-
-    if (classPosition >= 0) {
-        return false;
-    } else {
-        item.props.class += ' ' + className;
-    }
-};
-
-e$.removeClass = function (item, className) {
-    var classPosition = e$.hasClass(item, className);
-
-    if (classPosition >= 0) {
-        var classList = item.props.class.split(' ');
-        classList.splice(classPosition, 1);
-        var newClass = '';
-        for (var i = 0, classListLength = classList.length; i < classListLength; i++) {
-            newClass += ' ' + classList[i];
-        }
-        item.props.class = newClass;
-    } else {
-        return false;
-    }
-};
-
-e$.insert = function (parent, index, newNode) {
-    var eDom = parent.eDom;
-    parent.insertBefore(e$.create(newNode), parent.children[index]);
-
-    eDom.children.splice(index, 0, newNode);
-    e$.updateParents(parent);
 };
