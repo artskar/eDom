@@ -1,4 +1,4 @@
-# eDom v 0.9.1
+# eDom v 0.9.5
 
 [README по-русски](https://github.com/artskar/eDom/blob/master/README_ru.md)
 
