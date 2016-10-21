@@ -1,4 +1,4 @@
-# eDom v 0.9.0
+# eDom v 0.9.1
 
 Желаешь получить скорость VirtualDOM, но не можешь или не хочешь использовать весь этот стэк новых технологий и идеологий(React\Angular2, ECMA6\TS, Redux, etc.)?
 
@@ -424,7 +424,7 @@ e$('div', {id: 'root'},
 
 ## Теперь можно обновлять потомков этого `HTML` элемента своим новым eDom представлением:
 ```
-elem.eOut(newDOM);
+elem.render(newDOM);
 ```
 
 ![Примерно так это будет выглядеть в реальном DOM](https://cdn-images-1.medium.com/max/800/1*e1s_Zc_fVxL3i0un2ZNEtg.gif)
