@@ -107,14 +107,16 @@ NodeList.prototype.isNodeList = HTMLCollection.prototype.isNodeList = function()
  */
 Element.prototype.render = function (node, index) {
     var updateParent = false,
-        newNode = node;
+        newNode = node,
+        idx = index;
 
     if (typeof arguments[0] === 'boolean') {
         updateParent = arguments[0];
         newNode = arguments[1];
+        idx = arguments[2];
     }
 
-    e$.update(updateParent, this, newNode, index || null);
+    e$.update(updateParent, this, newNode, idx || null);
 };
 /**
  * {@link e$}
